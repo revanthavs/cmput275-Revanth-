@@ -2,12 +2,9 @@
 using namespace std;
 
 int main(){
-	int i = 25, *j;
+	int i = 25, *j, *k;
 	j = &i;
-	cout << j << endl;
-	j++;
-	cout << j << endl;
-	j = j - 3;
-	cout << j << endl;
+	k = &i;
+	cout << (j - k) << endl;
 	return 0;
 }
