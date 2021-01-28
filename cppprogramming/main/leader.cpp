@@ -3,6 +3,14 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+void swap(int &val1, int &val2){
+	int temp;
+	temp = val1;
+	val1 = val2;
+	val2 = temp;
+	return;
+}
+
 int main(){
 	int n, led = 0, i = 0, arrindex = 0;
 	cin >> n;
@@ -30,6 +38,12 @@ int main(){
 		// cout << leaders[i] << endl;
 	}
 	cout << endl;
+	int a = 5, b = 10;
+	cout << &a << " == " << a << endl;
+	cout << &b << " == " << b << endl;
+	swap(a,b);
+	cout << &a << " == " << a << endl;
+	cout << &b << " == " << b << endl;
 	return 0;
 }
 
