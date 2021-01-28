@@ -11,8 +11,18 @@ void swap(int &val1, int &val2){
 	return;
 }
 
+void reverse(int *begin, int *end){
+	if (begin == end || begin > end)
+		return;
+	int total = end - begin;
+	for (int i = 0; i < total/2; i++){
+		swap(*(begin+i),*(end-i-1));
+	}
+	return;
+}
+
 int main(){
-	int n, led = 0, i = 0, arrindex = 0;
+	int n, led = 0, i = 0, arrindex = 0, count = 0;
 	cin >> n;
 	int elements[n]; int leaders[n] = {};
 	for (i = 0; i < n; i++){
@@ -28,22 +38,29 @@ int main(){
 		}
 		if (i == n){
 			leaders[arrindex] = led;
-			arrindex++;led++;
+			arrindex++;led++;count++;
 		}
 	}
-	// leaders[arrindex] = n-1;
-	for (i = 0; i< n ; i++){
-		if (leaders[i] != -1)
+	// int count = 0;
+	for (i = 0; i < count ; i++){
+		if (i != (count-1))
 			cout << elements[leaders[i]] << " ";
-		// cout << leaders[i] << endl;
+		else
+			cout << elements[leaders[i]] << endl;
 	}
-	cout << endl;
-	int a = 5, b = 10;
-	cout << &a << " == " << a << endl;
-	cout << &b << " == " << b << endl;
-	swap(a,b);
-	cout << &a << " == " << a << endl;
-	cout << &b << " == " << b << endl;
+	cout << count << endl;
+	for (i = 0; i < count; i++){
+		if (i == 0)
+			reverse(elements,elements+leaders[i]);
+		else
+			reverse(elements+leaders[i-1]+1,elements+leaders[i]);
+	}
+	for (i = 0; i < n; i++)
+		if (i != (n-1))
+			cout << elements[i] << " ";
+		else
+			cout << elements[i] << endl;
+	// cout << endl;
 	return 0;
 }
 
