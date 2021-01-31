@@ -29,6 +29,7 @@ int main(){
 		cin >> elements[i];
 		leaders[i] = -1;
 	}
+	cout << "Ready to go!!" << endl;
 	while (led < n){
 		for (i = led+1; i<n; i++){
 			if (elements[led] <= elements[i]){
@@ -48,7 +49,7 @@ int main(){
 		else
 			cout << elements[leaders[i]] << endl;
 	}
-	cout << count << endl;
+	// cout << count << endl;
 	for (i = 0; i < count; i++){
 		if (i == 0)
 			reverse(elements,elements+leaders[i]);
