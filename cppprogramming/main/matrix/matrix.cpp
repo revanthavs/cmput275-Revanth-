@@ -56,7 +56,7 @@ Matrix& Matrix::operator-(const Matrix& rhs){
 
 Matrix& Matrix::operator*(const Matrix& rhs){
 	Matrix F_matrix(this->num_rows, rhs.num_columns, -1.0);
-	for (unsigned int i = 0; i < this->num_rows, i++){
+	for (unsigned int i = 0; i < this->num_rows; i++){
 		for (unsigned int j =0 ; j < rhs.num_columns; j++){
 			float result = 0.0;
 			for (unsigned int k = 0; k < rhs.num_columns; k++){
@@ -103,26 +103,26 @@ float* Matrix::operator[](unsigned int index){
 	return this->matrix[index];
 }
 
-const float* Matrix::operator[](unsigned int index){
+const float* Matrix::operator[](unsigned int index) const{
 	return this->matrix[index];
 }
 
 istream& Matrix::operator>>(istream& in){
-	for (unsigned int i = 0; i < this->num_rows; i++){
-		for (unsigned int j = 0; j < this->num_columns; j++){
-			in >> this->matrix[i][j];
+	for (unsigned int i = 0; i < num_rows; i++){
+		for (unsigned int j = 0; j < num_columns; j++){
+			in >> matrix[i][j];
 		}
 	}
 	return in;
 }
 
 ostream& Matrix::operator<<(ostream& out){
-	for (unsigned int i = 0; i < this->num_rows; i++){
-		for (unsigned int j = 0; j < this->num_columns; j++){
-			if (j != this->num_columns)
-				out << this->matrix[i][j] << " ";
+	for (unsigned int i = 0; i < num_rows; i++){
+		for (unsigned int j = 0; j < num_columns; j++){
+			if (j != num_columns)
+				out << matrix[i][j] << " ";
 			else
-				out << this->matrix[i][j];
+				out << matrix[i][j];
 		}
 		out << endl;
 	}
@@ -163,50 +163,50 @@ int main(){
     Matrix B = Matrix(2, 3, 2.0);
     const Matrix C = Matrix(3, 2, 3.0);
 
-    cout << "A\n" << A << endl;
-    cout << "B\n" << B << endl;
+    // cout << "A\n" << A << endl;
+    // cout << "B\n" << B << endl;
 
-    // Test the second constructor
+    // // Test the second constructor
     Matrix D = Matrix(3, 2, arr_ptr);
-    cout << "D\n" << D << endl;
+    // cout << "D\n" << D << endl;
 
-    // // Test matrix addition
-    cout << "A + B\n" << (A + B) << endl;
+    // // // Test matrix addition
+    // cout << "A + B\n" << (A + B) << endl;
 
-    // // Test matrix subtraction
-    cout << "A - B\n" << (A - B) << endl;
+    // // // Test matrix subtraction
+    // cout << "A - B\n" << (A - B) << endl;
 
-    // // Test matrix multiplication
-    cout << "B * C\n" << (B * C) << endl;
+    // // // Test matrix multiplication
+    // cout << "B * C\n" << (B * C) << endl;
 
-    // // Test unary negation
-    cout << "-B\n" << (-B) << endl;
+    // // // Test unary negation
+    // cout << "-B\n" << (-B) << endl;
 
-    // Test bracket operator
-    // non-const
-    A[0][0] = 0.0;
-    cout << "modified A\n" << A << endl;
-    // const
-    cout << "C[0][0]\n" << C[0][0] << endl << endl;
-    // C[0][0] = 1.0;  // compiler error!
+    // // Test bracket operator
+    // // non-const
+    // A[0][0] = 0.0;
+    // cout << "modified A\n" << A << endl;
+    // // const
+    // cout << "C[0][0]\n" << C[0][0] << endl << endl;
+//    // C[0][0] = 1.0;  // compiler error!
 
-    // Test transpose
-    cout << "A.transpose()\n" << A.transpose() << endl;
+    // // Test transpose
+    // cout << "A.transpose()\n" << A.transpose() << endl;
 
-    // Test submatrix
-    cout << "D.submatrix(1, 3, 0, 1)\n"
-              << D.submatrix(1, 3, 0, 1) << endl;
+    // // Test submatrix
+    // cout << "D.submatrix(1, 3, 0, 1)\n"
+    //           << D.submatrix(1, 3, 0, 1) << endl;
 
-    // Test extraction operator
-    Matrix E = Matrix(3, 2, 0.0);
-    cout << "Please enter 6 floats to populate E" << endl;
-    cin >> E;
-    cout << "E after extraction\n" << E << endl;
+    // // Test extraction operator
+    // Matrix E = Matrix(3, 2, 0.0);
+    // cout << "Please enter 6 floats to populate E" << endl;
+    // cin >> E;
+    // cout << "E after extraction\n" << E << endl;
 
-    // Test copy constructor
-    Matrix F = B;
-    F[0][0] = 100;
-    cout << "B after B's copy is modified\n" << B << endl;
+    // // Test copy constructor
+    // Matrix F = B;
+    // F[0][0] = 100;
+    // cout << "B after B's copy is modified\n" << B << endl;
 
     return 0;
 }

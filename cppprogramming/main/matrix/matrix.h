@@ -54,6 +54,9 @@ public:
 	// All the allocated memeory is freed when a matrix object goes
 	// out of scope
 	~Matrix();
-}
+private:
+	unsigned int num_rows, num_columns, size;
+	float** matrix;
+};
 
 #endif
