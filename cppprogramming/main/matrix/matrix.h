@@ -39,10 +39,10 @@ public:
 
 	// The Insertion operator reads num_rows x num_columns space separated
 	// elements from the input stream
-	istream& operator>>(istream& in);
+	// istream& operator>>(istream& in);
 
 	// The extraction operator print elements row by row
-	ostream& operator<<(ostream& out);
+	// ostream& operator<<(ostream& out);
 
 	// Makes a deep copy of the Matrix class
 	Matrix(const Matrix& copy);
