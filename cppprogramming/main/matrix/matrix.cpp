@@ -119,12 +119,13 @@ istream& operator>>(istream& in, Matrix& rhs){
 ostream& operator<<(ostream& out, Matrix& rhs){
 	for (unsigned int i = 0; i < rhs.num_rows; i++){
 		for (unsigned int j = 0; j < rhs.num_columns; j++){
-			if (j != rhs.num_columns)
+			if (j != rhs.num_columns-1)
 				out << rhs.matrix[i][j] << " ";
 			else
 				out << rhs.matrix[i][j];
 		}
-		out << endl;
+		if (i != rhs.num_rows-1)
+			out << endl;
 	}
 	return out;
 }
@@ -151,8 +152,10 @@ Matrix::~Matrix(){
 			matrix[i] = NULL;
 		}
 	}
-	if (matrix != NULL)
+	if (matrix != NULL){
 		delete[] matrix;
+		matrix = NULL;
+	}
 }
 
 float arr_ptr[] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
@@ -170,43 +173,43 @@ int main(){
     Matrix D = Matrix(3, 2, arr_ptr);
     cout << "D\n" << D << endl;
 
-    // // Test matrix addition
+    // Test matrix addition
     cout << "A + B\n" << (A + B) << endl;
 
-    // // Test matrix subtraction
-    cout << "A - B\n" << (A - B) << endl;
+   //  // // Test matrix subtraction
+   //  cout << "A - B\n" << (A - B) << endl;
 
-    // // Test matrix multiplication
-    cout << "B * C\n" << (B * C) << endl;
+   //  // // Test matrix multiplication
+   //  cout << "B * C\n" << (B * C) << endl;
 
-    // // Test unary negation
-    cout << "-B\n" << (~B) << endl;
+   //  // // Test unary negation
+   //  cout << "-B\n" << (~B) << endl;
 
-    // Test bracket operator
-    // non-const
-    A[0][0] = 0.0;
-    cout << "modified A\n" << A << endl;
-    // const
-    cout << "C[0][0]\n" << C[0][0] << endl << endl;
-   // C[0][0] = 1.0;  // compiler error!
+   //  // Test bracket operator
+   //  // non-const
+   //  A[0][0] = 0.0;
+   //  cout << "modified A\n" << A << endl;
+   //  // const
+   //  cout << "C[0][0]\n" << C[0][0] << endl << endl;
+   // // C[0][0] = 1.0;  // compiler error!
 
-    // Test transpose
-    cout << "A.transpose()\n" << A.transpose() << endl;
+   //  // Test transpose
+   //  cout << "A.transpose()\n" << A.transpose() << endl;
 
-    // Test submatrix
-    cout << "D.submatrix(1, 3, 0, 1)\n"
-              << D.submatrix(1, 3, 0, 1) << endl;
+   //  // Test submatrix
+   //  cout << "D.submatrix(1, 3, 0, 1)\n"
+   //            << D.submatrix(1, 3, 0, 1) << endl;
 
-    // Test extraction operator
-    Matrix E = Matrix(3, 2, 0.0);
-    cout << "Please enter 6 floats to populate E" << endl;
-    cin >> E;
-    cout << "E after extraction\n" << E << endl;
+   //  // Test extraction operator
+   //  Matrix E = Matrix(3, 2, 0.0);
+   //  cout << "Please enter 6 floats to populate E" << endl;
+   //  cin >> E;
+   //  cout << "E after extraction\n" << E << endl;
 
-    // Test copy constructor
-    Matrix F = B;
-    F[0][0] = 100;
-    cout << "B after B's copy is modified\n" << B << endl;
+   //  // Test copy constructor
+   //  Matrix F = B;
+   //  F[0][0] = 100;
+   //  cout << "B after B's copy is modified\n" << B << endl;
 
     return 0;
 }
