@@ -49,7 +49,7 @@ public:
 
 	// Overrides the equal to operator and make the deep copy of
 	// rhs Matrix
-	Matrix& operator=(const Matrix& rhs);
+	// Matrix& operator=(const Matrix& rhs);
 
 	// All the allocated memeory is freed when a matrix object goes
 	// out of scope
