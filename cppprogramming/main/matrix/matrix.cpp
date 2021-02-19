@@ -151,9 +151,62 @@ Matrix::~Matrix(){
 			matrix[i] = NULL;
 		}
 	}
-	delete[] matrix;
+	if (matrix != NULL)
+		delete[] matrix;
 }
 
-int main(){
+float arr_ptr[] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
 
+int main(){
+    // Test the first constructor
+    Matrix A = Matrix(2, 3, 1.0);
+    Matrix B = Matrix(2, 3, 2.0);
+    const Matrix C = Matrix(3, 2, 3.0);
+
+    cout << "A\n" << A << endl;
+    cout << "B\n" << B << endl;
+
+    // Test the second constructor
+    Matrix D = Matrix(3, 2, arr_ptr);
+    cout << "D\n" << D << endl;
+
+    // // Test matrix addition
+    cout << "A + B\n" << (A + B) << endl;
+
+    // // Test matrix subtraction
+    cout << "A - B\n" << (A - B) << endl;
+
+    // // Test matrix multiplication
+    cout << "B * C\n" << (B * C) << endl;
+
+    // // Test unary negation
+    cout << "-B\n" << (-B) << endl;
+
+    // Test bracket operator
+    // non-const
+    A[0][0] = 0.0;
+    cout << "modified A\n" << A << endl;
+    // const
+    cout << "C[0][0]\n" << C[0][0] << endl << endl;
+    // C[0][0] = 1.0;  // compiler error!
+
+    // Test transpose
+    cout << "A.transpose()\n" << A.transpose() << endl;
+
+    // Test submatrix
+    cout << "D.submatrix(1, 3, 0, 1)\n"
+              << D.submatrix(1, 3, 0, 1) << endl;
+
+    // Test extraction operator
+    Matrix E = Matrix(3, 2, 0.0);
+    cout << "Please enter 6 floats to populate E" << endl;
+    cin >> E;
+    cout << "E after extraction\n" << E << endl;
+
+    // Test copy constructor
+    Matrix F = B;
+    F[0][0] = 100;
+    cout << "B after B's copy is modified\n" << B << endl;
+
+    return 0;
 }
