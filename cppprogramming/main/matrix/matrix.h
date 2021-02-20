@@ -13,18 +13,18 @@ public:
 
 	// Overloads the + addition operator and performs operation
 	// according to Matrix addition
-	Matrix& operator+(const Matrix& rhs);
+	Matrix operator+(const Matrix& rhs);
 
 	// Overloads the - subtraction operator and performs operation
 	// according to Matrix subraction
-	Matrix& operator-(const Matrix& rhs);
+	Matrix operator-(const Matrix& rhs);
 
 	// Overloads the x multiplication operator and performs operation
 	// according to Matrix multiplication
-	Matrix& operator*(const Matrix& rhs);
+	Matrix operator*(const Matrix& rhs);
 
 	// Return matrix where all the the elements signs are flipped
-	Matrix& operator~();
+	Matrix operator~();
 
 	// Returns a transpose matrix by turning rows into columns
 	Matrix transpose();
@@ -42,7 +42,7 @@ public:
 	friend istream& operator>>(istream& in, Matrix& rhs);
 
 	// The extraction operator print elements row by row
-	friend ostream& operator<<(ostream& out, Matrix& rhs);
+	friend ostream& operator<<(ostream& out,const Matrix& rhs);
 
 	// Makes a deep copy of the Matrix class
 	Matrix(const Matrix& copy);
@@ -57,6 +57,7 @@ public:
 private:
 	unsigned int num_rows, num_columns, size;
 	float** matrix;
+	// Matrix* F_matrix = &Matrix(this->num_rows, this->num_columns, -1.0);
 };
 
 #endif

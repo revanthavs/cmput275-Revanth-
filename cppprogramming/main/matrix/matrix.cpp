@@ -34,8 +34,8 @@ Matrix::Matrix(unsigned int num_rows, unsigned int num_columns, float* arr_ptr){
 	}
 }
 
-Matrix& Matrix::operator+(const Matrix& rhs){
-	Matrix F_matrix(this->num_rows, this->num_columns, -1.0);
+Matrix Matrix::operator+(const Matrix& rhs){
+	Matrix F_matrix = Matrix(this->num_rows, this->num_columns, -1.0);
 	for (unsigned int i = 0; i < num_rows; i++){
 		for (unsigned int j = 0; j < num_columns; j++){
 			F_matrix.matrix[i][j] = this->matrix[i][j] + rhs.matrix[i][j];
@@ -44,8 +44,8 @@ Matrix& Matrix::operator+(const Matrix& rhs){
 	return F_matrix;
 }
 
-Matrix& Matrix::operator-(const Matrix& rhs){
-	Matrix F_matrix(this->num_rows, this->num_columns, -1.0);
+Matrix Matrix::operator-(const Matrix& rhs){
+	Matrix F_matrix = Matrix(this->num_rows, this->num_columns, -1.0);
 	for (unsigned int i = 0; i < num_rows; i++){
 		for (unsigned int j = 0; j < num_columns; j++){
 			F_matrix.matrix[i][j] = this->matrix[i][j] - rhs.matrix[i][j];
@@ -54,8 +54,8 @@ Matrix& Matrix::operator-(const Matrix& rhs){
 	return F_matrix;
 }
 
-Matrix& Matrix::operator*(const Matrix& rhs){
-	Matrix F_matrix(this->num_rows, rhs.num_columns, -1.0);
+Matrix Matrix::operator*(const Matrix& rhs){
+	Matrix F_matrix = Matrix(this->num_rows, rhs.num_columns, -1.0);
 	for (unsigned int i = 0; i < this->num_rows; i++){
 		for (unsigned int j =0 ; j < rhs.num_columns; j++){
 			float result = 0.0;
@@ -68,8 +68,8 @@ Matrix& Matrix::operator*(const Matrix& rhs){
 	return F_matrix;
 }
 
-Matrix& Matrix::operator~(){
-	Matrix F_matrix(num_rows, num_columns, -1.0);
+Matrix Matrix::operator~(){
+	Matrix F_matrix = Matrix(num_rows, num_columns, -1.0);
 	for (unsigned int i = 0; i < num_rows; i++){
 		for (unsigned int j = 0; j < num_columns; j++){
 			F_matrix.matrix[i][j] = -(this->matrix[i][j]);
@@ -79,7 +79,8 @@ Matrix& Matrix::operator~(){
 }
 
 Matrix Matrix::transpose(){
-	Matrix F_matrix(num_columns, num_rows, -1.0);
+	Matrix F_matrix = Matrix(num_columns, num_rows, -1.0);
+	// Matrix F_matrix = Matrix(num_columns, num_rows, -1.0);
 	for (unsigned int i = 0; i < this->num_columns; i++){
 		for (unsigned int j = 0; j < this->num_rows; j++){
 			F_matrix.matrix[i][j] = this->matrix[j][i];
@@ -90,7 +91,7 @@ Matrix Matrix::transpose(){
 
 Matrix Matrix::submatrix(unsigned int row_start, unsigned int row_end,
 	unsigned int column_start, unsigned int column_end){
-	Matrix F_matrix(row_end, column_end, -1.0);
+	Matrix F_matrix = Matrix(row_end, column_end, -1.0);
 	for (unsigned int i = row_start; i < row_end; i++){
 		for (unsigned int j = column_start; j < column_end; j++){
 			F_matrix.matrix[i][j] = this->matrix[i][j];
@@ -116,7 +117,7 @@ istream& operator>>(istream& in, Matrix& rhs){
 	return in;
 }
 
-ostream& operator<<(ostream& out, Matrix& rhs){
+ostream& operator<<(ostream& out, const Matrix& rhs){
 	for (unsigned int i = 0; i < rhs.num_rows; i++){
 		for (unsigned int j = 0; j < rhs.num_columns; j++){
 			if (j != rhs.num_columns-1)
@@ -176,40 +177,40 @@ int main(){
     // Test matrix addition
     cout << "A + B\n" << (A + B) << endl;
 
-   //  // // Test matrix subtraction
-   //  cout << "A - B\n" << (A - B) << endl;
+    // Test matrix subtraction
+    cout << "A - B\n" << (A - B) << endl;
 
-   //  // // Test matrix multiplication
-   //  cout << "B * C\n" << (B * C) << endl;
+    // Test matrix multiplication
+    cout << "B * C\n" << (B * C) << endl;
 
-   //  // // Test unary negation
-   //  cout << "-B\n" << (~B) << endl;
+    // Test unary negation
+    cout << "-B\n" << (~B) << endl;
 
-   //  // Test bracket operator
-   //  // non-const
-   //  A[0][0] = 0.0;
-   //  cout << "modified A\n" << A << endl;
-   //  // const
-   //  cout << "C[0][0]\n" << C[0][0] << endl << endl;
-   // // C[0][0] = 1.0;  // compiler error!
+    // Test bracket operator
+    // non-const
+    A[0][0] = 0.0;
+    cout << "modified A\n" << A << endl;
+    // const
+    cout << "C[0][0]\n" << C[0][0] << endl << endl;
+   // C[0][0] = 1.0;  // compiler error!
 
-   //  // Test transpose
-   //  cout << "A.transpose()\n" << A.transpose() << endl;
+    // Test transpose
+    cout << "A.transpose()\n" << A.transpose() << endl;
 
-   //  // Test submatrix
-   //  cout << "D.submatrix(1, 3, 0, 1)\n"
-   //            << D.submatrix(1, 3, 0, 1) << endl;
+    // Test submatrix
+    cout << "D.submatrix(1, 3, 0, 1)\n"
+              << D.submatrix(1, 3, 0, 1) << endl;
 
-   //  // Test extraction operator
-   //  Matrix E = Matrix(3, 2, 0.0);
-   //  cout << "Please enter 6 floats to populate E" << endl;
-   //  cin >> E;
-   //  cout << "E after extraction\n" << E << endl;
+    // Test extraction operator
+    Matrix E = Matrix(3, 2, 0.0);
+    cout << "Please enter 6 floats to populate E" << endl;
+    cin >> E;
+    cout << "E after extraction\n" << E << endl;
 
-   //  // Test copy constructor
-   //  Matrix F = B;
-   //  F[0][0] = 100;
-   //  cout << "B after B's copy is modified\n" << B << endl;
+    // Test copy constructor
+    Matrix F = B;
+    F[0][0] = 100;
+    cout << "B after B's copy is modified\n" << B << endl;
 
     return 0;
 }
