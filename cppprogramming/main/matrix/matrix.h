@@ -13,25 +13,37 @@ public:
 
 	// Overloads the + addition operator and performs operation
 	// according to Matrix addition
-	Matrix operator+(const Matrix& rhs);
+	// Since we are creating the new instance rather than modifying
+	// the existing object it's a constant
+	Matrix operator+(const Matrix& rhs) const;
 
 	// Overloads the - subtraction operator and performs operation
 	// according to Matrix subraction
-	Matrix operator-(const Matrix& rhs);
+	// Since we are creating the new instance rather than modifying
+	// the existing object it's a constant
+	Matrix operator-(const Matrix& rhs) const;
 
 	// Overloads the x multiplication operator and performs operation
 	// according to Matrix multiplication
-	Matrix operator*(const Matrix& rhs);
+	// Since we are creating the new instance rather than modifying
+	// the existing object it's a constant
+	Matrix operator*(const Matrix& rhs) const;
 
 	// Return matrix where all the the elements signs are flipped
-	Matrix operator~();
+	// Since we are creating the new instance rather than modifying
+	// the existing object it's a constant
+	Matrix operator~() const;
 
 	// Returns a transpose matrix by turning rows into columns
-	Matrix transpose();
+	// Since we are creating the new instance rather than modifying
+	// the existing object it's a constant
+	Matrix transpose() const;
 
 	// Returns a submatrix of the original matrix
+	// Since we are creating the new instance rather than modifying
+	// the existing object it's a constant
 	Matrix submatrix(unsigned int row_start, unsigned int row_end,
-		unsigned int column_start, unsigned int column_end);
+		unsigned int column_start, unsigned int column_end) const;
 
 	// Returns the index row of matrix as a float pointer
 	float* operator[](unsigned int index);
@@ -54,10 +66,10 @@ public:
 	// All the allocated memeory is freed when a matrix object goes
 	// out of scope
 	~Matrix();
-private:
+
 	unsigned int num_rows, num_columns, size;
+private:
 	float** matrix;
-	// Matrix* F_matrix = &Matrix(this->num_rows, this->num_columns, -1.0);
 };
 
 #endif
