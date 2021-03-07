@@ -26,12 +26,15 @@ template <typename T>
 class HashTable {
 public:
   // creates an empty hash table with the given number of buckets.
-  HashTable(unsigned int tableSize);
+  // HashTable(unsigned int tableSize);
+  HashTable();
 
   HashTable(const HashTable<T>& copy);
   ~HashTable();
 
   HashTable<T>& operator=(const HashTable<T>& rhs);
+
+  void resize(unsigned int newSize);
 
   // Check if the item already appears in the table.
   bool contains(const T& item) const;
@@ -60,20 +63,33 @@ private:
   unsigned int getBucket(const T& item) const;
 };
 
-
 template <typename T>
-HashTable<T>::HashTable(unsigned int tableSize) {
-  // make sure there is at least one bucket
-  assert(tableSize > 0);
+HashTable<T>::HashTable(){
+  // Number of buckets by default
+  unsigned int no_of_buckets = 10;
 
-  // calls the constructor for each linked list
-  // so each is initialized properly as an empty list
-  table = new LinkedList<T>[tableSize];
+  // Calls the constructor for each linked list
+  // So each is initialized properly as an empty list
+  table = new LinkedList<T>[no_of_buckets];
 
   // we are not storing anything
   numItems = 0;
-  this->tableSize = tableSize;
+  this->tableSize = no_of_buckets;
 }
+
+// template <typename T>
+// HashTable<T>::HashTable(unsigned int tableSize) {
+//   // make sure there is at least one bucket
+//   assert(tableSize > 0);
+
+//   // calls the constructor for each linked list
+//   // so each is initialized properly as an empty list
+//   table = new LinkedList<T>[tableSize];
+
+//   // we are not storing anything
+//   numItems = 0;
+//   this->tableSize = tableSize;
+// }
 
 template <typename T>
 HashTable<T>::HashTable(const HashTable<T>& copy) {
@@ -118,6 +134,31 @@ bool HashTable<T>::contains(const T& item) const {
   return table[bucket].find(item) != NULL;
 }
 
+template <typename T>
+void HashTable<T>::resize(unsigned int newSize){
+  unsigned int newTableSize;
+  if (tableSize < newSize){
+    newTableSize = max((newSize+1)*2, 10u);
+  }
+  else if (tableSize > newSize){
+    newTableSize = max(tableSize/2, 10u);
+  }
+
+  LinkedList<T> *newTable = new LinkedList<T>[newTableSize];
+  for (unsigned int i = 0; i < tableSize; i++){
+    LinkedList<T> toInsert = table[i];
+    for (ListNode<T> *start = toInsert.getFirst(); start != NULL; start = start->next){
+      unsigned bucket = start->item.hash() + newTableSize;
+      newTable[bucket].insertFront((start->item));
+    }
+    // toInsert.clear();
+  }
+  delete[] table;
+  table = NULL;
+  table = newTable;
+  tableSize = newTableSize;
+}
+
 
 template <typename T>
 bool HashTable<T>::insert(const T& item) {
@@ -126,6 +167,9 @@ bool HashTable<T>::insert(const T& item) {
     return false;
   }
   else {
+    if (numItems == tableSize){
+      resize(tableSize+1);
+    }
     // otherwise, insert it into the front of the list
     // in this bucket and return true
     unsigned int bucket = getBucket(item);
@@ -137,6 +181,9 @@ bool HashTable<T>::insert(const T& item) {
 
 template <typename T>
 void HashTable<T>::remove(const T& item) {
+  if (numItems < (tableSize/4)){
+    resize(tableSize-1);
+  }
   unsigned int bucket = getBucket(item);
 
   ListNode<T>* link = table[bucket].find(item);
