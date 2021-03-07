@@ -20,7 +20,6 @@
 
 #include "linked_list.h"
 #include "dynarray.h"
-#include <string> // Need to remove it 
 #include <cassert>
 
 template <typename T>
@@ -144,15 +143,12 @@ void HashTable<T>::resize(unsigned int newSize){
   else if (tableSize > newSize){
     newTableSize = max(tableSize/2, 10u);
   }
-  string buckets_numbers = " ";
-  string newbuekets_numbers = " ";
   LinkedList<T> *newTable = new LinkedList<T>[newTableSize];
   for (unsigned int i = 0; i < tableSize; i++){
     // LinkedList<T>* toInsert = table[i];
     for (ListNode<T> *start = table[i].getFirst(); start != NULL; start = start->next){
-      unsigned bucket = start->item.hash() % newTableSize;
-      buckets_numbers += string(getBucket(item));
-      newbuekets_numbers += string(bucket);
+      unsigned int bucket = start->item.hash() % newTableSize;
+      unsigned int abucket = getBucket(item);
       newTable[bucket].insertFront((start->item));
     }
     // toInsert.clear();
