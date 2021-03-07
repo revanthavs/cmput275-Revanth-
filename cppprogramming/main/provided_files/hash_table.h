@@ -181,7 +181,7 @@ bool HashTable<T>::insert(const T& item) {
 
 template <typename T>
 void HashTable<T>::remove(const T& item) {
-  if (numItems < (tableSize/4)){
+  if ((numItems < (tableSize/4)) && tableSize > 10){
     resize(tableSize-1);
   }
   unsigned int bucket = getBucket(item);
