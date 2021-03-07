@@ -148,7 +148,7 @@ void HashTable<T>::resize(unsigned int newSize){
     // LinkedList<T>* toInsert = table[i];
     for (ListNode<T> *start = table[i].getFirst(); start != NULL; start = start->next){
       unsigned int bucket = start->item.hash() % newTableSize;
-      unsigned int abucket = getBucket(item);
+      unsigned int abucket = getBucket(start->item);
       newTable[bucket].insertFront((start->item));
     }
     // toInsert.clear();
