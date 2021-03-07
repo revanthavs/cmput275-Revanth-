@@ -147,8 +147,8 @@ void HashTable<T>::resize(unsigned int newSize){
   for (unsigned int i = 0; i < tableSize; i++){
     // LinkedList<T>* toInsert = table[i];
     for (ListNode<T> *start = table[i].getFirst(); start != NULL; start = start->next){
-      unsigned int bucket = start->item.hash() % newTableSize;
-      unsigned int abucket = start->item.hash() % tableSize;
+      // unsigned int bucket = start->item.hash() % newTableSize;
+      // unsigned int abucket = start->item.hash() % tableSize;
       newTable[bucket].insertFront((start->item));
     }
     // toInsert.clear();
@@ -181,7 +181,7 @@ bool HashTable<T>::insert(const T& item) {
 
 template <typename T>
 void HashTable<T>::remove(const T& item) {
-  if ((numItems < (tableSize/4)) && tableSize > 10){
+  if ((numItems < (tableSize/4u)) && tableSize > 10){
     resize(tableSize-1);
   }
   unsigned int bucket = getBucket(item);
