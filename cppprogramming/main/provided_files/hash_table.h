@@ -138,7 +138,7 @@ template <typename T>
 void HashTable<T>::resize(unsigned int newSize){
   unsigned int newTableSize;
   if (tableSize < newSize){
-    newTableSize = max((newSize+1)*2, 10u);
+    newTableSize = max((tableSize)*2, 10u);
   }
   else if (tableSize > newSize){
     newTableSize = max(tableSize/2, 10u);
@@ -146,7 +146,7 @@ void HashTable<T>::resize(unsigned int newSize){
 
   LinkedList<T> *newTable = new LinkedList<T>[newTableSize];
   for (unsigned int i = 0; i < tableSize; i++){
-    LinkedList<T> toInsert = table[i];
+    LinkedList<T>* toInsert = table[i];
     for (ListNode<T> *start = toInsert.getFirst(); start != NULL; start = start->next){
       unsigned bucket = start->item.hash() + newTableSize;
       newTable[bucket].insertFront((start->item));
