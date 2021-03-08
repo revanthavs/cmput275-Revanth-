@@ -34,7 +34,7 @@ public:
 
   HashTable<T>& operator=(const HashTable<T>& rhs);
 
-  void resize(unsigned int newSize);
+  // void resize(unsigned int newSize);
 
   // Check if the item already appears in the table.
   bool contains(const T& item) const;
@@ -54,6 +54,7 @@ public:
   DynamicArray<T> getItemsArray() const;
 
 private:
+  void resize(unsigned int newSize);
   LinkedList<T> *table; // start of the array of linked lists (buckets)
   unsigned int numItems; // # of items in the table
   unsigned int tableSize; // # of buckets
@@ -147,7 +148,7 @@ void HashTable<T>::resize(unsigned int newSize){
   for (unsigned int i = 0; i < tableSize; i++){
     // LinkedList<T>* toInsert = table[i];
     for (ListNode<T> *start = table[i].getFirst(); start != NULL; start = start->next){
-      // unsigned int bucket = start->item.hash() % newTableSize;
+      unsigned int bucket = start->item.hash() % newTableSize;
       // unsigned int abucket = start->item.hash() % tableSize;
       newTable[bucket].insertFront((start->item));
     }
