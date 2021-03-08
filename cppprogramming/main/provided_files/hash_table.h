@@ -137,6 +137,7 @@ bool HashTable<T>::contains(const T& item) const {
 
 template <typename T>
 void HashTable<T>::resize(unsigned int newSize){
+  cout << "Resize is called!! " << endl; // need to delete this line
   unsigned int newTableSize;
   if (tableSize < newSize){
     newTableSize = max((tableSize)*2, 10u);
