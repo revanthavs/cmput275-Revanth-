@@ -11,7 +11,9 @@ int main(){
 	set<string> files[n];
 	track[track_i] = "/";
 	map<string, set<string>> directorys;
-	directorys.insert(pair<string, set<string>>(track[track_i], files[dir_i]));
+	directorys.insert(pair<string, 
+		set<string>>(track[track_i], files[dir_i]));
+	// directorys.insert(track[track_i], files[dir_i]);
 	dir_i++;
 	for (int i = 0; i < n; i++){
 		string command, name;

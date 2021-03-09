@@ -15,6 +15,14 @@
   Zac Friggstad, 2021
 */
 
+/*
+  Name: Atmakuri Venkata Sai Revanth
+  ID: 1684293
+  CMPUT 275, Winter 2021
+
+  Exercise 5: Dynamic Hashing
+*/
+
 #ifndef _HASH_TABLE_H_
 #define _HASH_TABLE_H_
 
@@ -134,30 +142,44 @@ bool HashTable<T>::contains(const T& item) const {
 
   return table[bucket].find(item) != NULL;
 }
-
+/*
+  Resize the number of buckets based on the newSize parameter
+  Arguments:
+    newSize(unsinged int): The new size of the linked list array or buckets
+  Return:
+    void
+*/
 template <typename T>
 void HashTable<T>::resize(unsigned int newSize){
-  cout << "Resize is called!! " << endl; // need to delete this line
-  unsigned int newTableSize;
+  unsigned int newTableSize = 1;
+  // If the table size to be incresesed
   if (tableSize < newSize){
     newTableSize = max((tableSize)*2, 10u);
   }
+  // If the table size to be reduced
   else if (tableSize > newSize){
     newTableSize = max(tableSize/2, 10u);
   }
+
+  // New memory location to store new buckets
   LinkedList<T> *newTable = new LinkedList<T>[newTableSize];
+  // Since hash table is nothing but a array of linked_lists
   for (unsigned int i = 0; i < tableSize; i++){
-    // LinkedList<T>* toInsert = table[i];
-    for (ListNode<T> *start = table[i].getFirst(); start != NULL; start = start->next){
-      unsigned int bucket = start->item.hash() % newTableSize;
-      // unsigned int abucket = start->item.hash() % tableSize;
+    // Replacing the linked_list items in the bucket to new bucket
+    for (ListNode<T> *start = table[i].getFirst(); start != NULL;
+    start = start->next){
+      // To compute the bucket with new size
+      unsigned int bucket = (start->item.hash() % newTableSize);
+      
       newTable[bucket].insertFront((start->item));
     }
-    // toInsert.clear();
   }
+  // Since the old array is no longer used
   delete[] table;
   table = NULL;
+  // Assigning the new array pointer
   table = newTable;
+  // Assigning the new size
   tableSize = newTableSize;
 }
 
@@ -169,6 +191,7 @@ bool HashTable<T>::insert(const T& item) {
     return false;
   }
   else {
+    // Since this is the only method to add items to the hash_table
     if (numItems == tableSize){
       resize(tableSize+1);
     }
@@ -183,6 +206,7 @@ bool HashTable<T>::insert(const T& item) {
 
 template <typename T>
 void HashTable<T>::remove(const T& item) {
+  // Since this is the only place to remove the items in the hash_table
   if ((numItems < (tableSize/4u)) && tableSize > 10){
     resize(tableSize-1);
   }
