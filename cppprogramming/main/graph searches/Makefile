@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-c -Wall -O2 -std=c++11
+CFLAGS= -g -c -Wall -O2 -std=c++11
 LFLAGS=
 PROGS= digraph_test reachability breadthfirstsearch depthfirstsearch
 OBJS= digraph.o digraph_test.o reachability.o breadthfirstsearch.o depthfirstsearch.o
