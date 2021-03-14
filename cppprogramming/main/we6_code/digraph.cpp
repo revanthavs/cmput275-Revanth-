@@ -1,5 +1,6 @@
 #include "digraph.h"
-
+#include <queue>
+#include <iostream>
 using namespace std;
 
 void Digraph::addVertex(int v) {
@@ -69,4 +70,81 @@ bool Digraph::isPath(vector<int> path) {
     return false;
 
   return isWalk(path);
+}
+
+// int getIndex(vector<int> v, int K)
+// {
+//     auto it = find(v.begin(), v.end(), K);
+ 
+//     // If element was found
+//     if (it != v.end()) 
+//     {
+     
+//         // calculating the index
+//         // of K
+//         int index = it - v.begin();
+//         return index;
+//     }
+//     else {
+//         // If the element is not
+//         // present in the vector
+//         return -1;
+//     }
+// }
+
+unordered_map<int, int> breadthFirstSearch(const Digraph& graph, int startVertex) {
+  unordered_map<int, int> searchTree; // map each vertex to its predecessor
+
+  searchTree[startVertex] = -1;
+
+  queue<int> q;         // store unexplored nodes in a queue rather than an unordered_set
+  q.push(startVertex);
+
+  while (!(q.empty())) {
+    int v = q.front();  // return a reference to the "oldest" element
+    q.pop();
+
+    for (auto iter = graph.neighbours(v); iter != graph.endIterator(v); iter++) {
+      if (searchTree.find(*iter) == searchTree.end()) { // not reached before
+        searchTree[*iter] = v;
+        q.push(*iter);
+      }
+    }
+  }
+
+  return searchTree;
+}
+
+int count_components(Digraph& graph){
+  int count = 0, total = 0;
+  vector<int> vertexs = graph.vertices();
+  // int s = vertexs.size();
+  while (!(vertexs.empty())) {
+    int start = vertexs.front();
+    count++;
+    unordered_map<int, int> result = breadthFirstSearch(graph, start);
+    // for (auto itr = result.begin(); itr != result.end(); itr++){
+    //   vertexs.remove_if(vertexs.begin(), vertexs.end(), itr->first);
+    // }
+  }
+  return count;
+}
+
+int main(){
+  Digraph graph;
+  int nodes[] = {1, 2, 3, 4, 5, 6};
+  for (auto v : nodes)
+    graph.addVertex(v);
+  int edges[][2] = {{1, 2}, {3, 4}, {3, 5}, {4, 5}};
+  for (auto e : edges) {
+    graph.addEdge(e[0], e[1]);
+    graph.addEdge(e[1], e[0]);
+  }
+  int s = count_components(graph);
+  cout << s << endl;
+  graph.addEdge(1, 4);
+  graph.addEdge(4, 1);
+  s = count_components(graph);
+  cout << s << endl;
+  return 0;
 }
