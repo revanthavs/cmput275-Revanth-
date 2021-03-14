@@ -1,5 +1,4 @@
 // Remember, style matters!
-// Remember, style matters!
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -30,6 +29,8 @@ void make_target(string target, vector<string>& track, unordered_set<string>& ma
 int main(){
     unsigned int n = 0, m = 0;
     cin >> n >> m;
+    // Since the order matters using vector to store files in directory
+    // Using unordered_map since find take constant time 
     unordered_map<string, vector<string> > targets;
     // targets names[n];
     for (unsigned int i = 0; i < n; i++){
@@ -37,11 +38,14 @@ int main(){
         cin >> num;
         // names[i].t_files = num;
         cin >> temp1;
+        // To remove the : at the end of directory name
         for (unsigned int j = 0; j < temp1.size()-1; j++){
             temp2 += temp1[j];
         }
         // names[i].target[temp2];
+        // Creating an empty directory
         targets[temp2];
+        // Adding the files to the directory
         for (unsigned int j = 0; j < num; j++){
             string temp = "";
             cin >> temp;
@@ -49,12 +53,18 @@ int main(){
             targets[temp2].push_back(temp);
         }
     }
+    // Since find take constand time using unordered_set
     unordered_set<string> made_target;
+    // Since order matters using vector
     vector<string> result;
     for (unsigned int i = 0; i < m; i++){
+        // Since we need to set the track for every make command
+        // Creating new track for every make
         vector<string> track; string temp = "";
-        cin >> temp >> temp;    // Need to check this approch
+        // Since the first input would be make
+        cin >> temp >> temp;
         make_target(temp, track, made_target, targets);
+        // Since we haven't done any target the directory is up to date
         if (track.empty()){
             result.push_back("make: `"+temp+"' is up to date.");
             // cout << "make: '" << temp << "' is up to date\n";
@@ -64,13 +74,10 @@ int main(){
             for (auto it = track.begin(); it != track.end(); it++){
                 if (it == track.begin())
                     temp += *it;
-                    // cout << *it;
                 else
                     temp += " "+ *it;
-                    // cout <<" "<< *it;
             }
             result.push_back(temp);
-            // cout << endl;
         }
     }
     for (auto it = result.begin(); it != result.end(); it++){
