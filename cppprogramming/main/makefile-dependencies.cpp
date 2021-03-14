@@ -69,6 +69,7 @@ int main(){
             result.push_back("make: `"+temp+"' is up to date.");
             // cout << "make: '" << temp << "' is up to date\n";
         }
+        // Since we have done some targets
         else{
             string temp = "";
             for (auto it = track.begin(); it != track.end(); it++){
