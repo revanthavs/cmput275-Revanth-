@@ -72,26 +72,6 @@ bool Digraph::isPath(vector<int> path) {
   return isWalk(path);
 }
 
-// int getIndex(vector<int> v, int K)
-// {
-//     auto it = find(v.begin(), v.end(), K);
- 
-//     // If element was found
-//     if (it != v.end()) 
-//     {
-     
-//         // calculating the index
-//         // of K
-//         int index = it - v.begin();
-//         return index;
-//     }
-//     else {
-//         // If the element is not
-//         // present in the vector
-//         return -1;
-//     }
-// }
-
 unordered_map<int, int> breadthFirstSearch(const Digraph& graph, int startVertex) {
   unordered_map<int, int> searchTree; // map each vertex to its predecessor
 
@@ -118,14 +98,25 @@ unordered_map<int, int> breadthFirstSearch(const Digraph& graph, int startVertex
 int count_components(Digraph& graph){
   int count = 0, total = 0;
   vector<int> vertexs = graph.vertices();
+  unordered_set<int> seen_vertexs;
   // int s = vertexs.size();
   while (!(vertexs.empty())) {
-    int start = vertexs.front();
+    int start_v = vertexs.back();
+    if (!(seen_vertexs.empty())) {
+      while ((!vertexs.empty()) && (seen_vertexs.find(start_v) != seen_vertexs.end())) {
+        vertexs.pop_back();
+        start_v = vertexs.back();
+      }
+    } 
+    if (vertexs.empty()){
+      break;
+    }
     count++;
-    unordered_map<int, int> result = breadthFirstSearch(graph, start);
-    // for (auto itr = result.begin(); itr != result.end(); itr++){
-    //   vertexs.remove_if(vertexs.begin(), vertexs.end(), itr->first);
-    // }
+    unordered_map<int, int> result = breadthFirstSearch(graph, start_v);
+    for (auto entry: result){
+      int value = entry.first;
+      seen_vertexs.insert(value);
+    }
   }
   return count;
 }
