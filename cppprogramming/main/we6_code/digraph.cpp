@@ -1,6 +1,6 @@
 #include "digraph.h"
 #include <queue>
-#include <iostream>
+#include <iostream> // Need to remove this
 using namespace std;
 
 void Digraph::addVertex(int v) {
@@ -121,21 +121,64 @@ int count_components(Digraph& graph){
   return count;
 }
 
-int main(){
+Digraph read_city_graph_undirected(){
   Digraph graph;
-  int nodes[] = {1, 2, 3, 4, 5, 6};
-  for (auto v : nodes)
-    graph.addVertex(v);
-  int edges[][2] = {{1, 2}, {3, 4}, {3, 5}, {4, 5}};
-  for (auto e : edges) {
-    graph.addEdge(e[0], e[1]);
-    graph.addEdge(e[1], e[0]);
+  string input_line;
+  while (getline(cin, input_line)){
+    char V = 'V', E = 'E';
+    if (input_line[0] == V){
+      int index = 2; char temp = input_line[index];
+      while (temp != ','){
+        index++;
+        temp = input_line[index];
+      }
+      string sub_str = input_line.substr(2, index-1);
+      int ver = stoi(sub_str);
+      graph.addVertex(ver);
+    }
+    else if (input_line[0] == E){
+     int index = 2; char temp = input_line[index];
+      while (temp != ','){
+        index++;
+        temp = input_line[index];
+      }
+      string sub_str = input_line.substr(2, index-1);
+      int ver1 = stoi(sub_str); index++; int temp_i = index;
+      temp = input_line[index];
+      while (temp != ','){
+        index++;
+        temp = input_line[index];
+      }
+      sub_str = input_line.substr(temp_i, index-1);
+      int ver2 = stoi(sub_str);
+      graph.addEdge(ver1, ver2);
+      graph.addEdge(ver2, ver1);
+    }
   }
-  int s = count_components(graph);
-  cout << s << endl;
-  graph.addEdge(1, 4);
-  graph.addEdge(4, 1);
-  s = count_components(graph);
-  cout << s << endl;
-  return 0;
+  return graph;
 }
+
+int main(){
+  Digraph graph = read_city_graph_undirected();
+  int count = count_components(graph);
+  cout << count << endl;
+}
+
+// int main(){
+//   Digraph graph;
+//   int nodes[] = {1, 2, 3, 4, 5, 6};
+//   for (auto v : nodes)
+//     graph.addVertex(v);
+//   int edges[][2] = {{1, 2}, {3, 4}, {3, 5}, {4, 5}};
+//   for (auto e : edges) {
+//     graph.addEdge(e[0], e[1]);
+//     graph.addEdge(e[1], e[0]);
+//   }
+//   int s = count_components(graph);
+//   cout << s << endl;
+//   graph.addEdge(1, 4);
+//   graph.addEdge(4, 1);
+//   s = count_components(graph);
+//   cout << s << endl;
+//   return 0;
+// }
