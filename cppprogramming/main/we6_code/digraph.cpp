@@ -163,22 +163,3 @@ int main(){
   int count = count_components(graph);
   cout << count << endl;
 }
-
-// int main(){
-//   Digraph graph;
-//   int nodes[] = {1, 2, 3, 4, 5, 6};
-//   for (auto v : nodes)
-//     graph.addVertex(v);
-//   int edges[][2] = {{1, 2}, {3, 4}, {3, 5}, {4, 5}};
-//   for (auto e : edges) {
-//     graph.addEdge(e[0], e[1]);
-//     graph.addEdge(e[1], e[0]);
-//   }
-//   int s = count_components(graph);
-//   cout << s << endl;
-//   graph.addEdge(1, 4);
-//   graph.addEdge(4, 1);
-//   s = count_components(graph);
-//   cout << s << endl;
-//   return 0;
-// }
