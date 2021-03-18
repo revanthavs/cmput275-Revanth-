@@ -125,7 +125,7 @@ Digraph read_city_graph_undirected(){
   Digraph graph;
   string input_line;
   while (getline(cin, input_line)){
-    char V = 'V', E = 'E';
+    char V = 'V', E = 'E', comma = ',';
     if (input_line[0] == V){
       int index = 2; char temp = input_line[index];
       while (temp != ','){
@@ -137,20 +137,22 @@ Digraph read_city_graph_undirected(){
       graph.addVertex(ver);
     }
     else if (input_line[0] == E){
-     int index = 2; char temp = input_line[index];
-      while (temp != ','){
-        index++;
-        temp = input_line[index];
+      int bounds = input_line.size()+1;
+      int index = 2, substr_i = 0; char temp = input_line[index]; string temp_string = "", sub_str[2];
+      for (int i = index; i < bounds; i++) {
+        temp = input_line[i];
+        if (temp == comma){
+          sub_str[substr_i] = temp_string;
+          temp_string = "";
+          substr_i++;
+          continue;
+        }
+        else{
+          temp_string += temp;
+        }
       }
-      string sub_str = input_line.substr(2, index-1);
-      int ver1 = stoi(sub_str); index++; int temp_i = index;
-      temp = input_line[index];
-      while (temp != ','){
-        index++;
-        temp = input_line[index];
-      }
-      sub_str = input_line.substr(temp_i, index-1);
-      int ver2 = stoi(sub_str);
+      int ver1 = stoi(sub_str[0]);
+      int ver2 = stoi(sub_str[1]);
       graph.addEdge(ver1, ver2);
       graph.addEdge(ver2, ver1);
     }
@@ -163,3 +165,23 @@ int main(){
   int count = count_components(graph);
   cout << count << endl;
 }
+
+
+    // else if (input_line[0] == E){
+    //  int index = 2; char temp = input_line[index];
+    //   while (temp != ','){
+    //     index++;
+    //     temp = input_line[index];
+    //   }
+    //   string sub_str = input_line.substr(2, index-1);
+    //   int ver1 = stoi(sub_str); index++; int temp_i = index;
+    //   temp = input_line[index];
+    //   while (temp != ','){
+    //     index++;
+    //     temp = input_line[index];
+    //   }
+    //   sub_str = input_line.substr(temp_i, index-1);
+    //   int ver2 = stoi(sub_str);
+    //   graph.addEdge(ver1, ver2);
+    //   graph.addEdge(ver2, ver1);
+    // }
