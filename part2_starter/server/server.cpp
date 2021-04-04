@@ -148,8 +148,7 @@ int main(int argc, char* argv[]) {
     PORT = atoi(argv[1]);
   }
   else{
-    std::cout << "Enter a port number while running\n./server [port]\n";
-    return 1;
+    std::cout << "Enter port number: \n";
   }
 
   struct sockaddr_in my_addr, peer_addr;
@@ -189,15 +188,22 @@ int main(int argc, char* argv[]) {
   conn_socket_desc = accept(lstn_socket_desc, (struct sockaddr *) &peer_addr, &peer_addr_size);
   if (conn_socket_desc == -1){
     std::cerr << "Connection socket creation failed!\n";
-    close(lstn_socket_desc);
-    // Should conform if we need to close the socket descriptor
+
+    // Need to check weather to continue
+    // Need to check if we need to close the socket descriptor
     return 1;
   }
-  
   std::cout << "Connection request accepted from " << inet_ntoa(peer_addr.sin_addr);
   std::cout << ":" << ntohs(peer_addr.sin_port) << "\n";
 
   struct timeval timer = {.tv_sec = 1, .tv_usec = 10000};
+
+  if (setsockopt(conn_socket_desc, SOL_SOCKET, SO_RCVTIMEO, (void *) &timer, sizeof(timer)) == -1) {
+    std::cerr << "Cannot set socket options!\n";
+    close(conn_socket_desc);
+    return 1;
+  }
+
 
   while(true) {
     int rec_size = recv(conn_socket_desc, buffer, BUFFER_SIZE, 0);
@@ -220,9 +226,9 @@ int main(int argc, char* argv[]) {
     }
     char R = 'R';
     if (buffer[0] == R){
-      string p[5];
+      // Need to check this way
+      char *p[5];
       int at = 0;
-      // Need to change it form line to buffer
       for (auto c : line) {
         if (c == ' ') {
           // starting a new string
@@ -260,7 +266,7 @@ int main(int argc, char* argv[]) {
           std::string str = "N ";
           str += std::to_string(path.size());
           send(conn_socket_desc, str.c_str(), str.length() + 1, 0);
-          int rec_size = recv(conn_socket_desc, buffer, BUFFER_SIZE, 0);
+          rec_size = recv(conn_socket_desc, buffer, BUFFER_SIZE, 0);
           if (rec_size == -1){
             std::cout << "Timeout occurred.. still waiting!\n";
             continue;
@@ -277,19 +283,17 @@ int main(int argc, char* argv[]) {
             str += std::to_string(points[v].lon);
             // str += "\n"; need to check if I need to send newline character
             send(conn_socket_desc, Way_point.c_str(), Way_point.length() + 1, 0);
-            int rec_size = recv(conn_socket_desc, buffer, BUFFER_SIZE, 0);
+            rec_size = recv(conn_socket_desc, buffer, BUFFER_SIZE, 0);
             if (rec_size == -1) {
               std::cout << "Timeout occurred.. still waiting!\n";
-              goto Continue_point;
               // Need to find a way to get to ther outer loop
-              // continue;
+              continue;
             }
             else{
               if (buffer[0] != A){
                 std::cout << "Received unexpected message!\n";
-                goto Continue_point;
                 // Need to find a way to get to the outer loop
-                // continue;
+                continue;
               }
             }
           }
@@ -302,8 +306,6 @@ int main(int argc, char* argv[]) {
       std::cout << "Received unexpected message!\n";
       continue;
     }
-    Continue_point:
-      continue;
   }
 
   return 0;
