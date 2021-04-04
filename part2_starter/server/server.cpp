@@ -24,14 +24,31 @@ long long manhattan(const Point& pt1, const Point& pt2) {
 
 // finds the point that is closest to a given point, pt
 int findClosest(const Point& pt, const unordered_map<int, Point>& points) {
-  pair<int, Point> best = *points.begin();
+  std::cout << "In findClosest 28\n";
+  // pair<int, Point> best = *points.begin();
 
-  for (const auto& check : points) {
-    if (manhattan(pt, check.second) < manhattan(pt, best.second)) {
-      best = check;
+  // for (const auto& check : points) {
+  //   if (manhattan(pt, check.second) < manhattan(pt, best.second)) {
+  //     best = check;
+  //   }
+  // }
+  // std::cout << "Returning form findClosest 35\n";
+  // return best.first;
+
+  int startVertex = 0;
+  int distance = 2147483647;
+
+  for (auto it: points){
+    //computing the vertex nearest to start vertex
+    long long temp = manhattan(it.second, pt);
+    if (temp <= distance){
+      distance = temp;
+      startVertex = it.first;
     }
   }
-  return best.first;
+
+  return startVertex;
+
 }
 
 // reads graph description from the input file and builts a graph instance
@@ -136,6 +153,9 @@ int main(int argc, char* argv[]) {
   int PORT = 50000, LISTEN_BACKLOG = 50, BUFFER_SIZE = 1024;
   WDigraph graph;
   unordered_map<int, Point> points;
+  Point sPoint, ePoint;
+  unordered_map<int, PIL> tree;
+  int start, end;
 
   // build the graph
   readGraph("edmonton-roads-2.0.1.txt", graph, points);
@@ -196,27 +216,31 @@ int main(int argc, char* argv[]) {
   std::cout << "Connection request accepted from " << inet_ntoa(peer_addr.sin_addr);
   std::cout << ":" << ntohs(peer_addr.sin_port) << "\n";
 
-  struct timeval timer = {.tv_sec = 1, .tv_usec = 10000};
+  // struct timeval timer = {.tv_sec = 1, .tv_usec = 10000};
+  struct timeval timer = {.tv_sec = 1};
 
   if (setsockopt(conn_socket_desc, SOL_SOCKET, SO_RCVTIMEO, (void *) &timer, sizeof(timer)) == -1) {
     std::cerr << "Cannot set socket options!\n";
-    close(conn_socket_desc);
+    close(lstn_socket_desc);
     return 1;
   }
 
 
+
   while(true) {
+    std::cout << "Inside while loop\n";
     int rec_size = recv(conn_socket_desc, buffer, BUFFER_SIZE, 0);
     if (rec_size == -1){
       std::cout << "Timeout occurred.. still waiting!\n";
       continue;
     }
     std::cout << "Message received\n";
-    Point sPoint, ePoint;
-    unordered_map<int, PIL> tree;
-    int start, end;
-    sPoint.lat = 0; sPoint.lon = 0; ePoint.lat = 0; ePoint.lat = 0;
-        
+    // Point sPoint, ePoint;
+    // unordered_map<int, PIL> tree;
+    // int start, end;
+    // sPoint.lat = 0; sPoint.lon = 0; ePoint.lat = 0; ePoint.lat = 0;
+    
+
     if (strcmp("Q", buffer) == 0) {
       std::cout << "Connection will be closed\n";
       // Need to check since we need to close connection
@@ -225,27 +249,55 @@ int main(int argc, char* argv[]) {
       break;
     }
     char R = 'R';
+    std::cout << "Checkpotin1\n";
     if (buffer[0] == R){
       // Need to check this way
-      char *p[5];
+      // char *p[5];
+      // std::cout << "Checkpoint1\n";
+      string point[5];
       int at = 0;
-      for (auto c : line) {
+      for (auto c : buffer) {
         if (c == ' ') {
           // starting a new string
           ++at;
         }
         else {
           // appending a character to the string we are building
-          p[at] += c;
+          point[at] += c;
         }
       }
+      char point1[point[1].length()];
+      for (int i = 0; i < point[1].length(); i++){
+          point1[i] = point[1][i];
+      }
 
-      sPoint.lat = atoi(p[1]);sPoint.lon = atoi(p[2]);
-      ePoint.lat = atoi(p[3]);ePoint.lon = atoi(p[4]);
+      char point2[point[2].length()];
+      for (int i = 0; i < point[2].length(); i++){
+          point2[i] = point[2][i];
+      }
+
+      char point3[point[3].length()];
+      for (int i = 0; i < point[3].length(); i++){
+          point3[i] = point[3][i];
+      }
+
+      char point4[point[4].length()];
+      for (int i = 0; i < point[4].length(); i++){
+          point4[i] = point[4][i];
+      }
+      
+      sPoint.lat = atol(point1); sPoint.lon = atol(point2);
+      ePoint.lat = atol(point3); ePoint.lon = atol(point4);
+      // sPoint.lat = atoi(p[1]);sPoint.lon = atoi(p[2]);
+      // ePoint.lat = atoi(p[3]);ePoint.lon = atoi(p[4]);
 
       start = findClosest(sPoint, points); end = findClosest(ePoint, points);
+      std::cout << "Checkpoint1 279\n";
+
+      std::cout << "Calling dijkstra\n";
 
       dijkstra(graph, start, tree);
+      std::cout << "After dijkstra\n";
       if (tree.find(end) == tree.end()) {
             std::string str = "N 0";
             send(conn_socket_desc, str.c_str(), str.length() + 1, 0);
@@ -284,6 +336,7 @@ int main(int argc, char* argv[]) {
             // str += "\n"; need to check if I need to send newline character
             send(conn_socket_desc, Way_point.c_str(), Way_point.length() + 1, 0);
             rec_size = recv(conn_socket_desc, buffer, BUFFER_SIZE, 0);
+            // if (rec_size == -1) {}
             if (rec_size == -1) {
               std::cout << "Timeout occurred.. still waiting!\n";
               // Need to find a way to get to ther outer loop

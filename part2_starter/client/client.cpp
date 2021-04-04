@@ -25,6 +25,7 @@ int create_and_open_fifo(const char * pname, int mode) {
         exit(-1);
     }
 
+
     // opening the fifo for read-only or write-only access
     // a file descriptor that refers to the open file description is
     // returned
@@ -82,6 +83,8 @@ int main(int argc, char const *argv[]) {
         return 1;
     }
 
+    cout << "socket created\n";
+
     // Prepare sockaddr_in structure variable
     peer_addr.sin_family = AF_INET;                         // address family (2 bytes)
     peer_addr.sin_port = htons(SERVER_PORT);                // port in network byte order (2 bytes)
@@ -94,6 +97,8 @@ int main(int argc, char const *argv[]) {
         close(socket_desc);
         return 1;
     }
+
+    cout << "Connected to the socket\n";
 
     struct timeval timer = {.tv_sec = 1};
 
@@ -126,10 +131,12 @@ int main(int argc, char const *argv[]) {
             break;
         }
 
-        char * coord[2];
+        // char * coord[2];
+        string coord[2] = {};
         int num = 0;
         for (auto ch : line) {
             if (ch == ' ') {
+            cout << "Check " << coord[num] << endl;
               ++num;
             }
             else {
@@ -137,8 +144,30 @@ int main(int argc, char const *argv[]) {
             }
         }
 
-        route_req+=" "+to_string(atof(coord[0])*100000);
-        route_req+=" "+to_string(atof(coord[1])*100000);
+        cout << "Checkpoint1\n";
+
+        char coord1[coord[0].length()];
+        for (int i = 0; i < coord[0].length(); i++){
+            coord1[i] = coord[0][i];
+        }
+
+        char coord2[coord[1].length()];
+        for (int i = 0; i < coord[1].length(); i++){
+            coord2[i] = coord[1][i];
+        }
+
+        // route_req+=" "+to_string(atof(coord[0])*100000);
+        // route_req+=" "+to_string(atof(coord[1])*100000);
+
+        long long temp1 = static_cast<long long>(stod(coord1)*100000);
+        long long temp2 = static_cast<long long>(stod(coord2)*100000);
+
+
+        route_req+=" "+to_string(temp1);
+        route_req+=" "+to_string(temp2);
+
+
+        cout << "Checkpoint3\n";
 
         num=0;
 
@@ -157,8 +186,31 @@ int main(int argc, char const *argv[]) {
             }
         }
 
-        route_req+=" "+to_string(atof(coord[0])*100000);
-        route_req+=" "+to_string(atof(coord[1])*100000);
+        cout << "Checkpoint2\n";
+
+        char coord3[coord[0].length()];
+        for (int i = 0; i < coord[0].length(); i++){
+            coord3[i] = coord[0][i];
+        }
+
+        char coord4[coord[1].length()];
+        for (int i = 0; i < coord[1].length(); i++){
+            coord4[i] = coord[1][i];
+        }
+
+
+        long long temp3 = static_cast<long long>(stod(coord3)*100000);
+        long long temp4 = static_cast<long long>(stod(coord4)*100000);
+
+        route_req+=" "+to_string(temp3);
+        route_req+=" "+to_string(temp4);
+
+
+        // route_req+=" "+to_string(atof(coord[0])*100000);
+        // route_req+=" "+to_string(atof(coord[1])*100000);
+
+        cout << "Received coordinates\n";
+        cout << route_req << endl;
 
         // 3. Write to the socket
         send(socket_desc, route_req.c_str(), route_req.length() + 1, 0);
