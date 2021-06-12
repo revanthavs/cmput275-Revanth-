@@ -1,0 +1,7 @@
+
+Showing Recent Issues
+
+Build target Memorize of project Memorize with configuration Debug
+error: Signing for "Memorize" requires a development team. Select a development team in the Signing & Capabilities editor. (in target 'Memorize' from project 'Memorize')
+
+

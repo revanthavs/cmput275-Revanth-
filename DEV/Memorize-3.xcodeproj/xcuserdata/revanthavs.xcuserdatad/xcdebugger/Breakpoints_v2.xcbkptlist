@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "90D747CD-3030-4D9A-AD93-F4B4612447B9"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0CCC6388-2705-42D8-AD0B-B0086EF9A30B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Memorize-3/EmojiMemoryGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "createMemoryGame()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0CCC6388-2705-42D8-AD0B-B0086EF9A30B - 6ab9baeb96c7adbf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Memorize_3.EmojiMemoryGame.createMemoryGame() -&gt; Memorize_3.MemoryGame&lt;Swift.String&gt;"
+                  moduleName = "Memorize-3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/revanthavs/Downloads/FILES/Developer/Memorize-3/Memorize-3/EmojiMemoryGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "178">
+               </Location>
+               <Location
+                  uuid = "0CCC6388-2705-42D8-AD0B-B0086EF9A30B - dac53dd92747b7a5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Swift.String in static Memorize_3.EmojiMemoryGame.createMemoryGame() -&gt; Memorize_3.MemoryGame&lt;Swift.String&gt;"
+                  moduleName = "Memorize-3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/revanthavs/Downloads/FILES/Developer/Memorize-3/Memorize-3/EmojiMemoryGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2513C724-FD05-4BF2-8D84-3E556D998C0D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Memorize-3/MemoryGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "init(numberOfPairOfCards:cardContentFactory:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D4979FD-9551-4F2D-9CF1-F73D00CBC89E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Memorize-3/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "8D4979FD-9551-4F2D-9CF1-F73D00CBC89E - 1457ef2d7a159b2a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Memorize_3.ContentView.body.getter : some"
+                  moduleName = "Memorize-3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/revanthavs/Downloads/FILES/Developer/Memorize-3/Memorize-3/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "547">
+               </Location>
+               <Location
+                  uuid = "8D4979FD-9551-4F2D-9CF1-F73D00CBC89E - 89c09dca43586a48"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;Memorize_3.MemoryGame&lt;Swift.String&gt;.Card&gt;, Swift.Int, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt; in Memorize_3.ContentView.body.getter : some"
+                  moduleName = "Memorize-3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/revanthavs/Downloads/FILES/Developer/Memorize-3/Memorize-3/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
